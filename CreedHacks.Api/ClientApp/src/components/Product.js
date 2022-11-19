@@ -4,7 +4,7 @@ import { Wrapper } from "./Product.styles.js";
 const Product = ({ item, handleAddToCart }) => {
   return (
     <Wrapper>
-      <img src={item.image} alt={item.title} />
+      <img style={{maxWidth:"100", maxHeight:"230"}} src={item.image} alt={item.title} />
       <div>
         <h3>{item.title}</h3>
         <p>{item.description}</p>

@@ -6,6 +6,7 @@ import { Wrapper, StyledButton } from "./Home.styles"
 import Cart from './Cart'
 import Product from './Product';
 import { useAppContext } from '../contexts/AppContext';
+import { addToCart } from '../helpers/httpCaller';
 
 export const Home = () => {
   let { products } = useAppContext();
@@ -16,7 +17,14 @@ export const Home = () => {
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
 
 
-  const handleAddToCart = (clickedItem) => {
+  const handleAddToCart = async (clickedItem) => {
+    await addToCart({
+      id: clickedItem.id, 
+      img: clickedItem.image, 
+      price: clickedItem.price, 
+      title: clickedItem.title,
+      amount: 1});
+
     setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.id === clickedItem.id);
 
