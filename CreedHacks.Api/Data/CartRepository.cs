@@ -51,12 +51,12 @@ namespace CreedHacks.Api.Data
                 if (product != null)
                 {
                     var products = sessionFound.Products;
-                    products.First(x => x.Id == Int32.Parse(cartItem.Id)).Amount = Int32.Parse(cartItem.Amount);
+                    (products.First(x => x.Id == Int32.Parse(cartItem.Id)) as Product).Amount = Int32.Parse(cartItem.Amount);
                     sessionFound.Products = products;
                 }
                 else
                 {
-                    var newProduct = new CartProduct()
+                    var newProduct = new Product()
                     {
                         Amount = Int32.Parse(cartItem.Amount),
                         Title = cartItem.Title,
@@ -70,7 +70,15 @@ namespace CreedHacks.Api.Data
                 await _context.SaveChangesAsync();
             }
         }
-
+        public async Task DeleteAsync(CartProductRemove productRemoveData)
+        {
+            var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);
+            if (sessionFound != null)
+            {
+                sessionFound.Products = sessionFound.Products.Where(x => x.Id != productRemoveData.ProductId).ToList();
+                _context.Session.Update(sessionFound);
+                await _context.SaveChangesAsync();
+            }
         public async Task RemoveProductFromCart(CartProductRemove productRemoveData)
         {
             var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);

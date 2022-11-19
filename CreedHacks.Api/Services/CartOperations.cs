@@ -7,11 +7,11 @@ namespace CreedHacks.Api.Services
 {
     public class CartOperations : ICartOperations
     {
-        private readonly ICartRepository _cartRepository;
+        private readonly ICartRepository _sessionRepository;
 
         public CartOperations(ICartRepository sessionRepository)
         {
-            _cartRepository = sessionRepository;
+            _sessionRepository = sessionRepository;
         }
         public void AddItemToMemoryDb()
         {
@@ -19,12 +19,13 @@ namespace CreedHacks.Api.Services
         }
         public async Task AddToCart(CartItemDto product)
         {
-            await _cartRepository.AddToCart(product);
+            await _repo.AddToCart(product);
+        }
         }
 
         public async Task RemoveProductFromCart(CartProductRemove product)
         {
-            await _cartRepository.RemoveProductFromCart(product);
+            await _sessionRepository.RemoveProductFromCart(product);
         }
     }
 }
