@@ -18,7 +18,7 @@ namespace CreedHacks.Api.Controllers
         [HttpPost]
         public ActionResult AddToCart([FromBody] CartItemDto cartItemDto)
         {
-            _cartOperations.AddItemToMemoryDb();
+            _cartOperations.AddToCart(cartItemDto);
             return Ok();
         }
 
@@ -33,6 +33,7 @@ namespace CreedHacks.Api.Controllers
 
     public class CartItemDto
     {
+        public int userId { get; set; }
         public string Id  { get; set; }
         public string Img { get; set; }
         public double Price { get; set; }
