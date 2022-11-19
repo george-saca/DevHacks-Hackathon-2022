@@ -33,5 +33,15 @@ namespace CreedHacks.Api.Data
             var list = _context?.Session?.ToList();
             return list;
         }
+
+        public async Task DeleteAsync(int userId)
+        {
+            var sessionFound = _context.Session.First(x => x.UserId == userId);
+            if(sessionFound != null)
+            {
+                _context.Session.Remove(sessionFound);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

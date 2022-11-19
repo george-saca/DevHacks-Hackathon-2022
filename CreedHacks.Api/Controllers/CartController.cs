@@ -1,4 +1,5 @@
-﻿using CreedHacks.Api.Services;
+﻿using CreedHacks.Api.Models;
+using CreedHacks.Api.Services;
 using CreedHacks.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +15,16 @@ namespace CreedHacks.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddToCart([FromQuery] int id, [FromQuery] string img, [FromQuery] string price, [FromQuery] string title, [FromQuery] string amount )
+        public ActionResult AddToCart([FromQuery] int id, [FromQuery] string img, [FromQuery] string price, [FromQuery] string title, [FromQuery] string amount)
         {
             _cartOperations.AddItemToMemoryDb();
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> RemoveFromCart([FromBody] CartProductRemove product)
+        {
+            await _cartOperations.RemoveProductFromCart(product);
             return Ok();
         }
     }

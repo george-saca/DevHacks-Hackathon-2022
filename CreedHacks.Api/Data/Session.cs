@@ -8,7 +8,7 @@ namespace CreedHacks.Api.Data
         [Key]
         [Column(Order = 1)]
         public int Id { get; set; }
-        public string? UserId { get; set; }
+        public int UserId { get; set; }
         public List<Product> Products { get; set; }
     }
 }
