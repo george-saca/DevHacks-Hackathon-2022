@@ -11,7 +11,15 @@ namespace CreedHacks.Api.Data
         public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions)
         {
-
+            //options.UseInMemoryDatabase(databaseName: "SessionContext");
         }
+
+        protected override void OnConfiguring
+       (DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseInMemoryDatabase(databaseName: "SessionContext");
+        }
+        public DbSet<Session>? Session { get; set; }
+
     }
 }
