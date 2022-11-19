@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CreedHacks.Api.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace CreedHacks.Api.Data
             _context = context;
             var session = new Session()
             {
-                UserId = "userId",
+                UserId = 12345,
                 Products = new List<Product>()
                     {
                         new Product()
                         {
-                            Name = "test1"
+                            Title= "Test",
                         }
                     }
             };
@@ -34,11 +35,12 @@ namespace CreedHacks.Api.Data
             return list;
         }
 
-        public async Task DeleteAsync(int userId)
+        public async Task DeleteAsync(CartProductRemove productRemoveData)
         {
-            var sessionFound = _context.Session.First(x => x.UserId == userId);
+            var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);
             if(sessionFound != null)
             {
+                var updatedListOfProducts = sessionFound.Products.Select(x => x.Id != productRemoveData.ProductId);
                 _context.Session.Remove(sessionFound);
                 await _context.SaveChangesAsync();
             }
