@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreedHacks", "CreedHacks.csproj", "{305F3A41-A6EF-4AC0-9BFA-99AB2A1BC980}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{305F3A41-A6EF-4AC0-9BFA-99AB2A1BC980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305F3A41-A6EF-4AC0-9BFA-99AB2A1BC980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305F3A41-A6EF-4AC0-9BFA-99AB2A1BC980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305F3A41-A6EF-4AC0-9BFA-99AB2A1BC980}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D8CF558-F22C-49DE-99FF-624F9131BBC4}
+	EndGlobalSection
+EndGlobal
