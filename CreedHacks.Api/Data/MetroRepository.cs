@@ -1,19 +1,14 @@
 ﻿using CreedHacks.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using CreedHacks.Api.Controllers;
 
 namespace CreedHacks.Api.Data
 {
-    public class SessionRepository : ICartRepository
+    public class MetroRepository : IMetroRepository
     {
         private readonly ApplicationDbContext? _context;
-        public SessionRepository(ApplicationDbContext context)
+        public MetroRepository(ApplicationDbContext context)
         {
             _context = context;
             var session = new CartSession()
@@ -39,7 +34,8 @@ namespace CreedHacks.Api.Data
         }
 
         public async Task<CartSession> GetSessionAsync(int userId) => await _context?.Session?.Where(x=>x.UserId ==userId).FirstOrDefaultAsync();
-
+        public async Task<List<Product>> GetProductsAsync() => await _context?.Products.ToListAsync();
+        
         public async Task AddToCart(CartItemDto cartItem)
         {
             var sessionFound = _context.Session.First(x => x.UserId == cartItem.userId);
@@ -51,12 +47,12 @@ namespace CreedHacks.Api.Data
                 if (product != null)
                 {
                     var products = sessionFound.Products;
-                    (products.First(x => x.Id == Int32.Parse(cartItem.Id)) as Product).Amount = Int32.Parse(cartItem.Amount);
+                    (products.First(x => x.Id == Int32.Parse(cartItem.Id))).Amount = Int32.Parse(cartItem.Amount);
                     sessionFound.Products = products;
                 }
                 else
                 {
-                    var newProduct = new Product()
+                    var newProduct = new CartProduct()
                     {
                         Amount = Int32.Parse(cartItem.Amount),
                         Title = cartItem.Title,
@@ -70,15 +66,7 @@ namespace CreedHacks.Api.Data
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task DeleteAsync(CartProductRemove productRemoveData)
-        {
-            var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);
-            if (sessionFound != null)
-            {
-                sessionFound.Products = sessionFound.Products.Where(x => x.Id != productRemoveData.ProductId).ToList();
-                _context.Session.Update(sessionFound);
-                await _context.SaveChangesAsync();
-            }
+
         public async Task RemoveProductFromCart(CartProductRemove productRemoveData)
         {
             var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);

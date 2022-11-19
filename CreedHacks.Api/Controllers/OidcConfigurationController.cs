@@ -7,10 +7,10 @@ namespace CreedHacks.Api.Controllers
     public class OidcConfigurationController : Controller
     {
         private readonly ILogger<OidcConfigurationController> _logger;
-        readonly ICartRepository _sessionRepository;
+        readonly IMetroRepository _sessionRepository;
 
         public OidcConfigurationController(
-            ICartRepository sessionRepository,
+            IMetroRepository sessionRepository,
             IClientRequestParametersProvider clientRequestParametersProvider,
             ILogger<OidcConfigurationController> logger)
         {

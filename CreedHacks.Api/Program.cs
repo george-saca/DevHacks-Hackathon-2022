@@ -32,7 +32,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<ICartRepository, SessionRepository>();
+builder.Services.AddScoped<IMetroRepository, MetroRepository>();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICartOperations, CartOperations>();
 
