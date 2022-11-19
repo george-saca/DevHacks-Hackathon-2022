@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { getProducts } from '../helpers/httpCaller';
 
 
-const AppContext = React.createContext({ products: [{}], setProducts: () => { } });
+const AppContext = React.createContext();
 const AppContextProvider = ({ children }) => {
+    const [products, setProducts] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }])
 
     useEffect(() => {
         async function fetchData() {
@@ -11,10 +12,8 @@ const AppContextProvider = ({ children }) => {
             setProducts(resp);
         }
         fetchData();
+    }, [])
 
-    })
-
-    const [products, setProducts] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }])
 
     return (
         <AppContext.Provider

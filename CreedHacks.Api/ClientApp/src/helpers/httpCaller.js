@@ -10,12 +10,18 @@ export const getProducts = async () =>
     return data;
 }
 
-export const addToCart = async (id, src, price, title, amount) => 
+export const addToCart = async (cartItem) => 
 {
     const token = await authService.getAccessToken();
-    const response = await fetch(`addToCart?id="${id}"&image="${src}"&price="${price}"&title="${title}"&amount="${amount}"`, {
-      headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cartItem)
+    };
+    if(token)
+        requestOptions.headers = {...requestOptions.headers, 'Authorization': `Bearer ${token}`};
+        
+    const response = await fetch(`api/addToCart`, requestOptions);
     const data = await response.json();
     return data;
 }

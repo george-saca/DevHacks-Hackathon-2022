@@ -13,11 +13,20 @@ namespace CreedHacks.Api.Controllers
             _cartOperations = cartOperations;
         }
 
-        [HttpGet]
-        public ActionResult AddToCart([FromQuery] int id, [FromQuery] string img, [FromQuery] string price, [FromQuery] string title, [FromQuery] string amount )
+        [HttpPost]
+        public ActionResult AddToCart([FromBody] CartItemDto cartItemDto)
         {
             _cartOperations.AddItemToMemoryDb();
             return Ok();
         }
+    }
+
+    public class CartItemDto
+    {
+        public string Id  { get; set; }
+        public string Img { get; set; }
+        public double Price { get; set; }
+        public string Title { get; set; }
+        public string Amount { get; set; }
     }
 }
