@@ -10,7 +10,7 @@ using CreedHacks.Api.Controllers;
 
 namespace CreedHacks.Api.Data
 {
-    public class SessionRepository : ISessionRepository
+    public class SessionRepository : ICartRepository
     {
         private readonly ApplicationDbContext? _context;
         public SessionRepository(ApplicationDbContext context)

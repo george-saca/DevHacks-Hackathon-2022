@@ -8,7 +8,7 @@ using CreedHacks.Api.Controllers;
 
 namespace CreedHacks.Api.Data
 {
-    public interface ISessionRepository
+    public interface ICartRepository
     {
         Task<CartSession> GetSessionAsync(int userId);
         public Task AddToCart(CartItemDto cartItem);
