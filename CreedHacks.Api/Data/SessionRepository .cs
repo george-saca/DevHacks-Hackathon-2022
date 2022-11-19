@@ -38,10 +38,10 @@ namespace CreedHacks.Api.Data
         public async Task DeleteAsync(CartProductRemove productRemoveData)
         {
             var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);
-            if(sessionFound != null)
+            if (sessionFound != null)
             {
-                var updatedListOfProducts = sessionFound.Products.Select(x => x.Id != productRemoveData.ProductId);
-                _context.Session.Remove(sessionFound);
+                sessionFound.Products = sessionFound.Products.Where(x => x.Id != productRemoveData.ProductId).ToList();
+                _context.Session.Update(sessionFound);
                 await _context.SaveChangesAsync();
             }
         }
