@@ -55,8 +55,7 @@ export const Home = () => {
 
   return (
     <div>
-      <h1>Hello, world!</h1>
-      <p>Welcome to your new single-page application, built with:</p>
+      <h1>Products</h1>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}

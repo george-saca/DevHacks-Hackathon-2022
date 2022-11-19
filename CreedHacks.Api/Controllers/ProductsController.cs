@@ -13,6 +13,7 @@ public class ProductsController : Controller
         {
             new Product()
             {
+                
                 Title = "Coca Cola",
                 Description = "Yum",
                 Price = 23.45,
