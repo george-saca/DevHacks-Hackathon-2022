@@ -61,7 +61,7 @@ export const Home = () => {
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong</div>;
-  
+
   return (
     <div>
       <h1>Hello, world!</h1>
@@ -78,7 +78,6 @@ export const Home = () => {
           <AddShoppingCart />
         </Badge>
       </StyledButton>
-      <CartProduct item={{ id: "cartitem1", description: "some description", title: "some title", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }} />
       <Grid container spacing={3}>
         {data?.map((item) => (
           <Grid item key={item.id} xs={12} sm={4}>
