@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CreedHacks.Api.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace CreedHacks.Api.Data
     public interface ISessionRepository
     {
         public List<Session> GetSession();
+        Task RemoveProductFromCart(CartProductRemove productRemoveData);
     }
 }

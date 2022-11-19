@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CreedHacks.Api.Controllers
 {
     [Route("api/addToCart")]
+    [Route("api/[controller]")]
     public class CartController : Controller
     {
         public static ICartOperations _cartOperations;
@@ -21,8 +22,9 @@ namespace CreedHacks.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> RemoveFromCart([FromBody] CartProductRemove product)
+        [HttpPut]
+        [Route("remove-product")]
+        public async Task<ActionResult> RemoveProductFromCart([FromBody] CartProductRemove product)
         {
             await _cartOperations.RemoveProductFromCart(product);
             return Ok();
