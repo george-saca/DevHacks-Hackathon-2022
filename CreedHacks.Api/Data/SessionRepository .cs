@@ -56,7 +56,7 @@ namespace CreedHacks.Api.Data
                 }
                 else
                 {
-                    var newProduct = new Product()
+                    var newProduct = new CartProduct()
                     {
                         Amount = Int32.Parse(cartItem.Amount),
                         Title = cartItem.Title,
