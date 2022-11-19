@@ -11,7 +11,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 // Add services to the container.
 var dbName = "InMemoryDb";
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -33,6 +32,8 @@ builder.Services.AddAuthentication()
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMetroRepository, MetroRepository>();
+builder.Services.AddScoped<IProductOperations, ProductOperations>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICartOperations, CartOperations>();
 
@@ -73,6 +74,7 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
+;
 
 app.Run();
