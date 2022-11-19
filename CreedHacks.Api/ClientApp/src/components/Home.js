@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import CartProduct from './CartProduct';
 
 export class Home extends Component {
   static displayName = Home.name;
 
   render() {
+    // let [product,setProduct] = useState({id:"cartitem1", title: "some title" , amount: 2, price:12})
     return (
       <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>
+          <CartProduct item={{id:"cartitem1", title: "some title" , amount: 2, price:12, image:"https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}} />
           <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
           <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
           <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
