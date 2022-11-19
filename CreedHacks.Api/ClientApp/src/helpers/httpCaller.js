@@ -4,8 +4,8 @@ export const getProducts = async () =>
 {
     const token = await authService.getAccessToken();
     const response = await fetch('products', {
-      headers: !token ? {} : { 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c` }
-    });
+        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+      });
     const data = await response.json();
     return data;
 }

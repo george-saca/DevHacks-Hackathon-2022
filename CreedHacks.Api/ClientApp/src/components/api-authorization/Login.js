@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import { Grid, TextField, Button } from '@material-ui/core'
 export const Login = () => {
   
-  [userName, setUserName] = useState("");
-  [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const signInClick = () => 
   {
 
   };
-  const setPass = () => 
+  const setPass = (pass) => 
   {
-
+    setPassword(pass);
   };
 
-  const setUser = () => 
+  const setUser = (user) => 
   {
 
   };
