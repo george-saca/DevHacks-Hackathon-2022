@@ -9,7 +9,7 @@ namespace CreedHacks.Api.Data
 {
     public interface ISessionRepository
     {
-        public List<Session> GetSession();
+        Task<CartSession> GetSessionAsync(int userId);
         Task RemoveProductFromCart(CartProductRemove productRemoveData);
     }
 }

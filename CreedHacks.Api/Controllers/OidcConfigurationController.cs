@@ -21,11 +21,11 @@ namespace CreedHacks.Api.Controllers
 
         public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
 
-        [HttpGet("_configuration/{clientId}")]
-        public IActionResult GetClientRequestParameters([FromRoute] string clientId)
+        [HttpGet("_configuration/{userId}")]
+        public IActionResult GetClientRequestParameters([FromRoute] int userId)
         {
-            var result = _sessionRepository.GetSession();
-            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, clientId);
+            var result = _sessionRepository.GetSessionAsync(userId);
+            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, userId.ToString());
             return Ok(parameters);
         }
     }
