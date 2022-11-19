@@ -3,7 +3,6 @@ import { Button } from "@material-ui/core";
 import { Wrapper } from "./CartProduct.styles";
 
 const CartProduct = ({ item, addToCart, removeFromCart }) => {
-  let [product, setProduct] = useState({ id: "cartitem1", title: "some title", amount: 2, price: 12 })
   return (
     <Wrapper>
       <div>
