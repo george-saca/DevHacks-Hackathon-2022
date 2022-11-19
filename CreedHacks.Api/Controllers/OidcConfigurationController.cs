@@ -21,7 +21,7 @@ namespace CreedHacks.Api.Controllers
         [HttpGet("_configuration/{userId}")]
         public IActionResult GetClientRequestParameters([FromRoute] string userId)
         {
-            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, userId.ToString());
+            var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, userId);
             return Ok(parameters);
         }
     }
