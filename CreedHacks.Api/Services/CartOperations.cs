@@ -7,9 +7,9 @@ namespace CreedHacks.Api.Services
 {
     public class CartOperations : ICartOperations
     {
-        private readonly ISessionRepository _sessionRepository;
+        private readonly ICartRepository _sessionRepository;
 
-        public CartOperations(ISessionRepository sessionRepository)
+        public CartOperations(ICartRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
         }
