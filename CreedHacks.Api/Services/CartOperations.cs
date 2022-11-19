@@ -7,25 +7,25 @@ namespace CreedHacks.Api.Services
 {
     public class CartOperations : ICartOperations
     {
-        private readonly ISessionRepository _repo;
+        private readonly ISessionRepository _sessionRepository;
 
-        public CartOperations(ISessionRepository repo)
+        public CartOperations(ISessionRepository sessionRepository)
         {
-            _repo = repo;
+            _sessionRepository = sessionRepository;
         }
         public void AddItemToMemoryDb()
         {
             throw new NotImplementedException();
         }
-
-        public Task RemoveProductFromCart(CartProductRemove product)
-        {
-            throw new NotImplementedException();
-        }
-        
         public async Task AddToCart(CartItemDto product)
         {
             await _repo.AddToCart(product);
+        }
+        }
+
+        public async Task RemoveProductFromCart(CartProductRemove product)
+        {
+            await _sessionRepository.RemoveProductFromCart(product);
         }
     }
 }
