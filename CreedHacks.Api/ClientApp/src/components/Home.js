@@ -1,29 +1,91 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import CartProduct from './CartProduct';
+import { Badge, Drawer, Grid, LinearProgress } from "@material-ui/core";
+import { AddShoppingCart } from "@material-ui/icons";
+import { Wrapper, StyledButton } from "./Home.styles"
+import Cart from './Cart'
+import { useQuery } from "react-query";
+import Product from './Product';
 
-export class Home extends Component {
-  static displayName = Home.name;
+export const Home = () => {
+  // export type CartItemType = {
+  //   id: number;
+  //   category: string;
+  //   description: string;
+  //   image: string;
+  //   price: number;
+  //   title: string;
+  //   amount: number;
+  // };
 
-  render() {
-    // let [product,setProduct] = useState({id:"cartitem1", title: "some title" , amount: 2, price:12})
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <CartProduct item={{id:"cartitem1", title: "some title" , amount: 2, price:12, image:"https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}} />
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
+  let [cartItems, setCartItems] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }]);
+  let [cartOpen, setCartOpen] = useState(false);
+  const getTotalItems = (items) => Array.isArray(items) ?
+    items.reduce((acc, item) => acc + item.amount, 0) : 0;
+
+  const getProducts = async () =>
+    await (await fetch("https://fakestoreapi.com/products")).json();
+
+  const { data, isLoading, error } = useQuery(
+    "products",
+    getProducts
+  );
+  const handleAddToCart = (clickedItem) => {
+    setCartItems((prev) => {
+      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+
+      if (isItemInCart) {
+        return prev.map((item) =>
+          item.id === clickedItem.id
+            ? { ...item, amount: item.amount + 1 }
+            : item
+        );
+      }
+
+      return [...prev, { ...clickedItem, amount: 1 }];
+    });
+  };
+
+  const handleRemoveFromCart = (id) => {
+    setCartItems((prev) =>
+      prev.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, { ...item, amount: item.amount - 1 }];
+        } else {
+          return [...acc, item];
+        }
+      }, [])
     );
-  }
+  };
+
+  if (isLoading) return <LinearProgress />;
+  if (error) return <div>Something went wrong</div>;
+  
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+      <p>Welcome to your new single-page application, built with:</p>
+      <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
+      </Drawer>
+      <StyledButton onClick={() => setCartOpen(true)}>
+        <Badge badgeContent={getTotalItems(cartItems)} color="error">
+          <AddShoppingCart />
+        </Badge>
+      </StyledButton>
+      <CartProduct item={{ id: "cartitem1", description: "some description", title: "some title", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }} />
+      <Grid container spacing={3}>
+        {data?.map((item) => (
+          <Grid item key={item.id} xs={12} sm={4}>
+            <Product item={item} handleAddToCart={handleAddToCart} />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 }

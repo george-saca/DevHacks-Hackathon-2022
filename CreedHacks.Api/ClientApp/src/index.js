@@ -5,14 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
-
+const client = new QueryClient();
 root.render(
   <BrowserRouter basename={baseUrl}>
-    <App />
+    <QueryClientProvider client={client}>
+      <App />
+    </QueryClientProvider>
   </BrowserRouter>);
 
 // If you want your app to work offline and load faster, you can change
@@ -20,7 +23,3 @@ root.render(
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.unregister();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
