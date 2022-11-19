@@ -19,8 +19,7 @@ namespace CreedHacks.Api.Services
         }
         public async Task AddToCart(CartItemDto product)
         {
-            await _repo.AddToCart(product);
-        }
+            await _sessionRepository.AddToCart(product);
         }
 
         public async Task RemoveProductFromCart(CartProductRemove product)

@@ -73,6 +73,7 @@ namespace CreedHacks.Api.Data
                 await _context.SaveChangesAsync();
             }
         }
+
         public async Task DeleteAsync(CartProductRemove productRemoveData)
         {
             var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);
@@ -82,6 +83,8 @@ namespace CreedHacks.Api.Data
                 _context.Session.Update(sessionFound);
                 await _context.SaveChangesAsync();
             }
+        }
+
         public async Task RemoveProductFromCart(CartProductRemove productRemoveData)
         {
             var sessionFound = _context.Session.First(x => x.UserId == productRemoveData.UserId);

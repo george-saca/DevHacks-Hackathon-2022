@@ -10,8 +10,8 @@ namespace CreedHacks.Api.Data
 {
     public interface ISessionRepository
     {
-        public List<Session> GetSession();
-        public Task AddToCart(CartItemDto cartItem);
+         List<Session> GetSession();
+         Task AddToCart(CartItemDto cartItem);
         Task RemoveProductFromCart(CartProductRemove productRemoveData);
     }
 }
