@@ -1,5 +1,7 @@
 using CreedHacks.Api.Data;
 using CreedHacks.Api.Models;
+using CreedHacks.Api.Services;
+using CreedHacks.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -24,6 +26,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<ICartOperations, CartOperations>();
 
 var app = builder.Build();
 
