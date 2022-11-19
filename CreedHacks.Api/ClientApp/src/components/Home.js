@@ -1,35 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CartProduct from './CartProduct';
 import { Badge, Drawer, Grid, LinearProgress } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
 import { Wrapper, StyledButton } from "./Home.styles"
 import Cart from './Cart'
-import { useQuery } from "react-query";
 import Product from './Product';
+import { useAppContext } from '../contexts/AppContext';
 
 export const Home = () => {
-  // export type CartItemType = {
-  //   id: number;
-  //   category: string;
-  //   description: string;
-  //   image: string;
-  //   price: number;
-  //   title: string;
-  //   amount: number;
-  // };
+  let { products } = useAppContext();
 
   let [cartItems, setCartItems] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }]);
   let [cartOpen, setCartOpen] = useState(false);
   const getTotalItems = (items) => Array.isArray(items) ?
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
 
-  const getProducts = async () =>
-    await (await fetch("https://fakestoreapi.com/products")).json();
 
-  const { data, isLoading, error } = useQuery(
-    "products",
-    getProducts
-  );
   const handleAddToCart = (clickedItem) => {
     setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.id === clickedItem.id);
@@ -59,9 +45,6 @@ export const Home = () => {
     );
   };
 
-  if (isLoading) return <LinearProgress />;
-  if (error) return <div>Something went wrong</div>;
-
   return (
     <div>
       <h1>Hello, world!</h1>
@@ -79,7 +62,7 @@ export const Home = () => {
         </Badge>
       </StyledButton>
       <Grid container spacing={3}>
-        {data?.map((item) => (
+        {products?.map((item) => (
           <Grid item key={item.id} xs={12} sm={4}>
             <Product item={item} handleAddToCart={handleAddToCart} />
           </Grid>
