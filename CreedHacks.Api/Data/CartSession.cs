@@ -6,9 +6,8 @@ namespace CreedHacks.Api.Data
     public class CartSession
     {
         [Key]
-        [Column(Order = 1)]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public List<CartProduct> Products { get; set; }
+        public string Products { get; set; }
     }
 }

@@ -16,7 +16,7 @@ const CartProduct = ({ item, addToCart, removeFromCart }) => {
             size="small"
             disableElevation
             variant="contained"
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => removeFromCart(item)}
           >
             -
           </Button>
