@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addToCart } from '../helpers/httpCaller';
 import useSpeechToText from 'react-hook-speech-to-text';
 import { useNavigate } from "react-router-dom";
@@ -46,31 +46,40 @@ export const UiAddToCart = () => {
   if (error) return <p>Web Speech API is not available in this browser 🤷‍</p>;
 
   const sendAmountAndRedirectToCart = async (transcriptNo) => {
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
 
-    transcriptNo.match(/^\d+|\d+\b|\d+(?=\w)/g)
-      .map(function (v) { return +v; });
+    if(transcriptNo.match(/^\d+|\d+\b|\d+(?=\w)/g)
+    .map(function (v) { return +v; }))
+    {
+      console.log(transcriptNo[0]);
 
-    console.log(transcriptNo[0]);
- 
-    await addToCart({
-      userId: userId,
-      productId: 41,
-      img: "https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg",
-      price: 12.5,
-      title: "testTitle",
-      amount: transcriptNo
-    });
-
-    history("/");
+      await addToCart({
+        userId: userId,
+        productId: 41,
+        img: "https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg",
+        price: 12.5,
+        title: "testTitle",
+        amount: transcriptNo
+      });
+      delay(3000).then(() => history("/"));
+    }
+    else
+    {
+      alert("The recorded message is not an integer number");
+    }
   }
 
   return (
+    
     <div style={{ display: 'flex', flexDirection: 'column'}}>
-     <h4>Recording: {isRecording.toString()}</h4>
+     <h4>Recording: {isRecording.toString()}</h4>     
+     <h4>Amount recorded: {results[results.length - 1]?.transcript ?? 0}</h4>
      <h2 style={{ alignSelf: 'center' , textAlign:'center', display:'block'}}>Speak to introduce the amount</h2>
      <br/>
-
      <ProductWrapper>
+     
      <MicIcon style={{ marginTop: '10px', alignSelf: 'center', flexDirection: 'row', width:"100px", height:"100%"}} onClick={isRecording ? stopSpeechToText  : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
      <img style={{ alignSelf: 'center', flexDirection: 'row', maxHeight:'500px', width:"400px", height:"500px"}} class="flex-container" src="https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg"/>
       <div>
