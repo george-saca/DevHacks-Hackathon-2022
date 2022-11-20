@@ -19,6 +19,8 @@ namespace CreedHacks.Api.Data
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "SessionContext");
         }
+
+
         public DbSet<CartSession>? Session { get; set; }
         public DbSet<Product>? Products { get; set; }
 

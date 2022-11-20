@@ -2,10 +2,10 @@
 using CreedHacks.Api.Services;
 using CreedHacks.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace CreedHacks.Api.Controllers
 {
-    [Route("api/addToCart")]
     [Route("api/[controller]")]
     public class CartController : Controller
     {
@@ -16,6 +16,7 @@ namespace CreedHacks.Api.Controllers
         }
 
         [HttpPost]
+        [Route("add-to-cart")]
         public ActionResult AddToCart([FromBody] CartItemDto cartItemDto)
         {
             _cartOperations.AddToCart(cartItemDto);
@@ -33,11 +34,17 @@ namespace CreedHacks.Api.Controllers
 
     public class CartItemDto
     {
-        public int userId { get; set; }
-        public string Id  { get; set; }
+        [JsonProperty("userId")]
+        public int UserId { get; set; }
+        [JsonProperty("productId")]
+        public int ProductId  { get; set; }
+        [JsonProperty("img")]
         public string Img { get; set; }
+        [JsonProperty("price")]
         public double Price { get; set; }
+        [JsonProperty("title")]
         public string Title { get; set; }
-        public string Amount { get; set; }
+        [JsonProperty("amount")]
+        public int Amount { get; set; }
     }
 }

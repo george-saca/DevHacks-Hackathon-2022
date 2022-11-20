@@ -6,12 +6,12 @@ import { Wrapper, StyledButton } from "./Home.styles"
 import Cart from './Cart'
 import Product from './Product';
 import { useAppContext } from '../contexts/AppContext';
-import { addToCart } from '../helpers/httpCaller';
+import { addToCart, removeFromCart } from '../helpers/httpCaller';
 
 export const Home = () => {
   let { products } = useAppContext();
 
-  let [cartItems, setCartItems] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }]);
+  let [cartItems, setCartItems] = useState([]);
   let [cartOpen, setCartOpen] = useState(false);
   const getTotalItems = (items) => Array.isArray(items) ?
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
@@ -19,11 +19,13 @@ export const Home = () => {
 
   const handleAddToCart = async (clickedItem) => {
     await addToCart({
-      id: clickedItem.id, 
-      img: clickedItem.image, 
-      price: clickedItem.price, 
+      userId: 12345,
+      productId: clickedItem.id,
+      img: clickedItem.image,
+      price: clickedItem.price,
       title: clickedItem.title,
-      amount: 1});
+      amount: 1
+    });
 
     setCartItems((prev) => {
       const isItemInCart = prev.find((item) => item.id === clickedItem.id);
@@ -40,10 +42,15 @@ export const Home = () => {
     });
   };
 
-  const handleRemoveFromCart = (id) => {
+  const handleRemoveFromCart = async (clickedItem) => {
+    await removeFromCart({
+      userId: 12345,
+      productId: clickedItem.id,
+      amount: 1
+    });
     setCartItems((prev) =>
       prev.reduce((acc, item) => {
-        if (item.id === id) {
+        if (item.id === clickedItem.id) {
           if (item.amount === 1) return acc;
           return [...acc, { ...item, amount: item.amount - 1 }];
         } else {
