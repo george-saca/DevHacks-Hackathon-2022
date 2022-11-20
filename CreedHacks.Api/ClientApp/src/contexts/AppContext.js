@@ -6,7 +6,7 @@ const AppContext = React.createContext();
 const AppContextProvider = ({ children }) => {
     const [products, setProducts] = useState([])
     const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('userId')) || 0);
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') || []);
     let history = useNavigate();
     useEffect(() => {
         async function fetchData() {
@@ -36,6 +36,10 @@ const AppContextProvider = ({ children }) => {
         else
             localStorage.setItem('userId', JSON.stringify(userId));
     }, [userId])
+
+    useEffect(() => {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems])
 
 
     return (

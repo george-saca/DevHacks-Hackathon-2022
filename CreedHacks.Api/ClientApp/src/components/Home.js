@@ -10,7 +10,7 @@ import { addToCart, removeFromCart } from '../helpers/httpCaller';
 
 
 export const Home = () => {
-  let { cartItems, products, setCartItems } = useAppContext();
+  let { cartItems, products, setCartItems, userId } = useAppContext();
   // let [cartUserItems, setCartUserItems] = useState(cartItems);
 
   let [cartOpen, setCartOpen] = useState(false);
@@ -23,7 +23,7 @@ export const Home = () => {
 
   const handleAddToCart = async (clickedItem) => {
     addToCart({
-      userId: 12345,
+      userId: userId,
       productId: clickedItem.id ?? clickedItem.productId,
       img: clickedItem.image,
       price: clickedItem.price,
@@ -36,7 +36,7 @@ export const Home = () => {
 
   const handleRemoveFromCart = async (clickedItem) => {
     await removeFromCart({
-      userId: 12345,
+      userId: userId,
       productId: clickedItem.id,
       amount: 1
     });

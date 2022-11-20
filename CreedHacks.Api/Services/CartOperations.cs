@@ -20,8 +20,8 @@ namespace CreedHacks.Api.Services
         }
         public async Task<List<CartProduct>> AddToCart(CartItemDto product)
         {
-            await _metroRepository.AddToCart(product);
-            return await GetCart(product.UserId);
+            return await _metroRepository.AddToCart(product);
+            //return await GetCart(product.UserId);
         }
 
         public async Task<List<CartProduct>> RemoveProductFromCart(CartProductRemove product)
@@ -33,7 +33,12 @@ namespace CreedHacks.Api.Services
         public async Task<List<CartProduct>> GetCart(int userId)
         {
             var session = await _metroRepository.GetSessionAsync(userId);
-            return JsonSerializer.Deserialize<List<CartProduct>>(session.Products);
+            if(session!=null)
+                return JsonSerializer.Deserialize<List<CartProduct>>(session.Products);
+            else
+            {
+                return JsonSerializer.Deserialize<List<CartProduct>>(JsonSerializer.Serialize(new List<CartProduct>()));
+            }
         }
     }
 }
