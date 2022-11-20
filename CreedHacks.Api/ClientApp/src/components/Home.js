@@ -10,13 +10,16 @@ import { addToCart } from '../helpers/httpCaller';
 
 
 export const Home = () => {
-  let { products } = useAppContext();
+  let { cartItems, products, setCartItems } = useAppContext();
+  let [cartUserItems, setCartUserItems] = useState(cartItems);
 
-  let [cartItems, setCartItems] = useState([{ id: "cartitem1", title: "some title", description: "some description", amount: 2, price: 12, image: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }]);
   let [cartOpen, setCartOpen] = useState(false);
   const getTotalItems = (items) => Array.isArray(items) ?
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
-
+  
+  useEffect(() => {
+    setCartUserItems(cartItems)
+    }, [cartItems]);
 
   const handleAddToCart = async (clickedItem) => {
     await addToCart({
@@ -59,13 +62,13 @@ export const Home = () => {
       <h1>Products</h1>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
-          cartItems={cartItems}
+          cartItems={cartUserItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color="error">
+        <Badge badgeContent={getTotalItems(cartUserItems)} color="error">
           <AddShoppingCart />
         </Badge>
       </StyledButton>
