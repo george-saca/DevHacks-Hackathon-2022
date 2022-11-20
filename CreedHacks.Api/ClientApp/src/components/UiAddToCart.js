@@ -4,16 +4,17 @@ import useSpeechToText from 'react-hook-speech-to-text';
 import { useNavigate } from "react-router-dom";
 import MicIcon from '@material-ui/icons/Mic';
 import { Wrapper } from "./UiAddToCart.styles.js";
+import { useAppContext } from '../contexts/AppContext';
 
 export const UiAddToCart = () => {
-
+  let { userId } = useAppContext();
   var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   var SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
   var SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
   var quantities = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
   const speechRecognitionList = new SpeechGrammarList();
-  var grammar = '#JSGF V1.0; grammar quantities; public <color> = ' + quantities.join(' | ') + ' ;'
+  var grammar = '#JSGF V1.0; grammar numbers; public <number> = ' + quantities.join(' | ') + ' ;'
   speechRecognitionList.addFromString(grammar, 1);
 
   const {
@@ -36,8 +37,10 @@ export const UiAddToCart = () => {
 
   useEffect(() => {
     console.log(results);
+    if(results.length>0){
     sendAmountAndRedirectToCart(results[results.length - 1]?.transcript);
-  }, [isRecording]);
+    }
+  }, [results]);
 
   if (error) return <p>Web Speech API is not available in this browser 🤷‍</p>;
 
@@ -47,12 +50,14 @@ export const UiAddToCart = () => {
       .map(function (v) { return +v; });
 
     console.log(transcriptNo[0]);
+ 
     await addToCart({
-      id: 1,
+      userId: userId,
+      productId: 41,
       img: "https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg",
-      price: 6,
-      title: "APA PLATA IZVORUL ALB",
-      amount: transcriptNo[0]
+      price: 12.5,
+      title: "testTitle",
+      amount: transcriptNo
     });
 
     history("/");
@@ -61,7 +66,7 @@ export const UiAddToCart = () => {
   return (
     <Wrapper>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {/* <h1>Recording: {isRecording.toString()}</h1> */}
+        {<h1>Recording: {isRecording.toString()}</h1> }
         <h2 style={{ alignSelf: 'center', textAlign: 'center', display: 'block' }}>Speak to introduce the amount</h2>
         <br />
         <MicIcon style={{ alignSelf: 'center', display: 'block', width: "120px", height: "100px" }} onClick={isRecording ? stopSpeechToText : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
