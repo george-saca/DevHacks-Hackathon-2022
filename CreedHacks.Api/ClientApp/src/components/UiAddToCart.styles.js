@@ -7,8 +7,7 @@ export const Wrapper = styled.div`
     padding: 0px;
     border: none;
     margin: auto;
-    display: block;
+    display: flex-box;
     alignSelf: center;
-    display:block;
   }
 `;

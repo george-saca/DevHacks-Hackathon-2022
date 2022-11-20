@@ -3,8 +3,17 @@
   text-align: center;
   word-break: break-all;
   background: white;
+  color:yellow;
+  font-weight:bold;
 }
 
+.navbar-expand-sm{
+  /* background-color: darkblue; */
+}
+.link{
+  color:yellow;
+  font-weight:bold;
+}
 html {
   font-size: 14px;
 }
