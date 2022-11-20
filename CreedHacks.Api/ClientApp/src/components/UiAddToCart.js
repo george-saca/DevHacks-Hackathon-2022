@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { addToCart } from '../helpers/httpCaller';
 import useSpeechToText from 'react-hook-speech-to-text';
 import { useNavigate } from "react-router-dom";
+import MicIcon from '@material-ui/icons/Mic';
+import { Wrapper } from "./UiAddToCart.styles.js";
 
 export const UiAddToCart = () => {
     const {
@@ -45,14 +47,15 @@ export const UiAddToCart = () => {
     }
 
   return (
+    <Wrapper>
     <div style={{ display: 'flex', flexDirection: 'column'}}>
-     <h1>Recording: {isRecording.toString()}</h1>
-     <h1 style={{ alignSelf: 'center' , textAlign:'center', display:'block'}}>Speak or Type to introduce the amount</h1>
+     {/* <h1>Recording: {isRecording.toString()}</h1> */}
+     <h2 style={{ alignSelf: 'center' , textAlign:'center', display:'block'}}>Speak to introduce the amount</h2>
      <br/>
-     <img style={{ alignSelf: 'center', display:'block', width:"200px"}} onClick={isRecording ? stopSpeechToText  : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
-     <br/>
-     <h2 style={{ alignSelf: 'center', display:'block' }}>Apa Plata Dorna Izvorul Alb</h2>
-     <img  style={{ alignSelf: 'center', display:'block' }} class="flex-container" src="https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg"/>
+     <MicIcon style={{ alignSelf: 'center', display:'block', width:"120px", height:"100px"}} onClick={isRecording ? stopSpeechToText  : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
+     <img  class="flex-container" src="https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg"/>
+     <h3 style={{ alignSelf: 'center', display:'block' }}>Apa Plata Dorna Izvorul Alb</h3>
      </div>
+     </Wrapper>
   );
 };

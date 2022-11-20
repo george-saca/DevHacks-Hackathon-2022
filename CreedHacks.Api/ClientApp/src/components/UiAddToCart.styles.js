@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-display: flex;
-flexDirection: column;
-
   img {
+    inset: 0px;
+    box-sizing: border-box;
+    padding: 0px;
+    border: none;
+    margin: auto;
+    display: block;
+    alignSelf: center;
     display:block;
-     alignSelf: center;
   }
 `;
