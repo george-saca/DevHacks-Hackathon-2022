@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 var dbName = "InMemoryDb";
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase(dbName));
+    options.UseSqlServer("Server=DESKTOP-8G1206I\\SQLEXPRESS;Database=MetroDatabase;Trusted_Connection=True;"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 //builder.Services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase());

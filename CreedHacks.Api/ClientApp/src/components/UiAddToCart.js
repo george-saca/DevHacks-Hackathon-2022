@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import MicIcon from '@material-ui/icons/Mic';
 import { Wrapper } from "./UiAddToCart.styles.js";
 import { useAppContext } from '../contexts/AppContext';
-import { Wrapper as ProductWrapper }  from "./Product.styles.js";
+import { Wrapper as ProductWrapper } from "./Product.styles.js";
+
 
 export const UiAddToCart = () => {
-  let { userId } = useAppContext();
+  let { userId, setCartItems } = useAppContext();
   var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   var SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
   var SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
@@ -38,8 +39,8 @@ export const UiAddToCart = () => {
 
   useEffect(() => {
     console.log(results);
-    if(results.length>0){
-    sendAmountAndRedirectToCart(results[results.length - 1]?.transcript);
+    if (results.length > 0) {
+      sendAmountAndRedirectToCart(results[results.length - 1]?.transcript);
     }
   }, [results]);
 
@@ -51,33 +52,35 @@ export const UiAddToCart = () => {
       .map(function (v) { return +v; });
 
     console.log(transcriptNo[0]);
- 
-    await addToCart({
+
+    addToCart({
       userId: userId,
-      productId: 41,
+      productId: 21,
       img: "https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg",
       price: 12.5,
       title: "testTitle",
       amount: transcriptNo
-    });
+    }).then((data) => {
+      setCartItems(data);
+    });;
 
     history("/");
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column'}}>
-     <h4>Recording: {isRecording.toString()}</h4>
-     <h2 style={{ alignSelf: 'center' , textAlign:'center', display:'block'}}>Speak to introduce the amount</h2>
-     <br/>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <h4>Recording: {isRecording.toString()}</h4>
+      <h2 style={{ alignSelf: 'center', textAlign: 'center', display: 'block' }}>Speak to introduce the amount</h2>
+      <br />
 
-     <ProductWrapper>
-     <MicIcon style={{ marginTop: '10px', alignSelf: 'center', flexDirection: 'row', width:"100px", height:"100%"}} onClick={isRecording ? stopSpeechToText  : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
-     <img style={{ alignSelf: 'center', flexDirection: 'row', maxHeight:'500px', width:"400px", height:"500px"}} class="flex-container" src="https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg"/>
-      <div>
-        <h3>Apa Plata Dorna Izvorul Alb</h3>
-        <h3>6 lei</h3>
-      </div>
-    </ProductWrapper>
-     </div>
+      <ProductWrapper>
+        <MicIcon style={{ marginTop: '10px', alignSelf: 'center', flexDirection: 'row', width: "100px", height: "100%" }} onClick={isRecording ? stopSpeechToText : startSpeechToText} src="https://cdn.icon-icons.com/icons2/2770/PNG/512/voice_microphone_icon_176686.png" />
+        <img style={{ alignSelf: 'center', flexDirection: 'row', maxHeight: '500px', width: "400px", height: "500px" }} class="flex-container" src="https://www.auchan.ro/public/images/h92/heb/h00/apa-plata-dorna-2-l-9309752459294.jpg" />
+        <div>
+          <h3>Apa Plata Dorna Izvorul Alb</h3>
+          <h3>6 lei</h3>
+        </div>
+      </ProductWrapper>
+    </div>
   );
 };

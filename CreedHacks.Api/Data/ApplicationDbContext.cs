@@ -14,11 +14,11 @@ namespace CreedHacks.Api.Data
             //options.UseInMemoryDatabase(databaseName: "SessionContext");
         }
 
-        protected override void OnConfiguring
-       (DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "SessionContext");
-        }
+       // protected override void OnConfiguring
+       //(DbContextOptionsBuilder optionsBuilder)
+       // {
+       //     optionsBuilder.UseInMemoryDatabase(databaseName: "SessionContext");
+       // }
 
 
         public DbSet<CartSession>? Session { get; set; }
