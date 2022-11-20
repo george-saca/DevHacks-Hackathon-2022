@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CreedHacks.Api.Data;
+using CreedHacks.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CreedHacks.Controllers;
 
@@ -6,26 +8,12 @@ namespace CreedHacks.Controllers;
 [Route("[controller]")]
 public class ProductsController : Controller
 {
-    [HttpGet]
-    public List<Product> GetProducts()
-    {
-        return new List<Product>()
-        {
-            new Product()
-            {
-                Title = "Coca Cola",
-                Description = "Yum",
-                Price = 23.45,
-                Image = "https://d1lqpgkqcok0l.cloudfront.net/medias/sys_master/he9/hcc/8866092318750.jpg?buildNumber=d833850c7c4c2971f2d4002fa9f2941c13f1a2b0e9ccb9af7255295ec8e851a5"
-            }
-        };
-    }
-}
+    private readonly IProductOperations _productOperations;
 
-public class Product
-{
-    public string Title {get;set;}
-    public string Description { get; set; }
-    public double Price { get; set; }
-    public string Image { get; set; }
+    public ProductsController(IProductOperations productOperations)
+    {
+        _productOperations = productOperations;
+    }
+    [HttpGet]
+    public async Task<List<Product>> GetProducts() => await _productOperations.GetProductsAsync();
 }

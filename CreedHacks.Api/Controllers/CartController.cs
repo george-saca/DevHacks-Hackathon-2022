@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CreedHacks.Api.Controllers
 {
     [Route("api/addToCart")]
+    [Route("api/[controller]")]
     public class CartController : Controller
     {
         public static ICartOperations _cartOperations;
@@ -17,12 +18,13 @@ namespace CreedHacks.Api.Controllers
         [HttpPost]
         public ActionResult AddToCart([FromBody] CartItemDto cartItemDto)
         {
-            _cartOperations.AddItemToMemoryDb();
+            _cartOperations.AddToCart(cartItemDto);
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> RemoveFromCart([FromBody] CartProductRemove product)
+        [HttpPut]
+        [Route("remove-product")]
+        public async Task<ActionResult> RemoveProductFromCart([FromBody] CartProductRemove product)
         {
             await _cartOperations.RemoveProductFromCart(product);
             return Ok();
@@ -31,6 +33,7 @@ namespace CreedHacks.Api.Controllers
 
     public class CartItemDto
     {
+        public int userId { get; set; }
         public string Id  { get; set; }
         public string Img { get; set; }
         public double Price { get; set; }
