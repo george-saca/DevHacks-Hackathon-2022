@@ -1,4 +1,5 @@
 using CreedHacks.Api.Data;
+using CreedHacks.Api.Hubs;
 using CreedHacks.Api.Models;
 using CreedHacks.Api.Services;
 using CreedHacks.Api.Services.Interfaces;
@@ -35,6 +36,8 @@ builder.Services.AddScoped<IMetroRepository, MetroRepository>();
 builder.Services.AddScoped<IProductOperations, ProductOperations>();
 
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
+
 builder.Services.AddScoped<ICartOperations, CartOperations>();
 
 builder.Services.AddSwaggerGen();
@@ -73,6 +76,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapHub<CartHub>("/cartHub");
 
 app.MapFallbackToFile("index.html");
 ;

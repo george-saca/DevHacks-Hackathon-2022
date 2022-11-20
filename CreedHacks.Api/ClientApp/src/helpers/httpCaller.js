@@ -18,7 +18,7 @@ export const addToCart = async (cartItem) =>
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cartItem)
     };
-    if(token)
+    if(token) 
         requestOptions.headers = {...requestOptions.headers, 'Authorization': `Bearer ${token}`};
         
     const response = await fetch(`api/Cart/add-to-cart`, requestOptions);
@@ -38,6 +38,21 @@ export const removeFromCart = async (cartItem) =>
         requestOptions.headers = {...requestOptions.headers, 'Authorization': `Bearer ${token}`};
         
     const response = await fetch(`api/Cart/remove-product`, requestOptions);
+    const data = await response.json();
+    return data;
+}
+
+
+
+export const getCart = async (userId) => 
+{
+    const token = await authService.getAccessToken();
+    const requestOptions = {
+    };
+    if(token) 
+        requestOptions.headers = {...requestOptions.headers, 'Authorization': `Bearer ${token}`};
+        
+    const response = await fetch(`api/cart/${userId}`, requestOptions);
     const data = await response.json();
     return data;
 }

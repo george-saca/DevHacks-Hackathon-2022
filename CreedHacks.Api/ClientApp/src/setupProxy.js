@@ -9,6 +9,8 @@ const context =  [
   "/products",
   "/api/Cart/add-to-cart",
   "/api/Cart/remove-product",
+  "/api/cart",
+  "/api/addToCart",
   "/_configuration",
   "/.well-known",
   "/Identity",

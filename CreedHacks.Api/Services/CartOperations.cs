@@ -2,6 +2,7 @@
 using CreedHacks.Api.Data;
 using CreedHacks.Api.Models;
 using CreedHacks.Api.Services.Interfaces;
+using System.Text.Json;
 
 namespace CreedHacks.Api.Services
 {
@@ -17,14 +18,22 @@ namespace CreedHacks.Api.Services
         {
             throw new NotImplementedException();
         }
-        public async Task AddToCart(CartItemDto product)
+        public async Task<List<CartProduct>> AddToCart(CartItemDto product)
         {
             await _metroRepository.AddToCart(product);
+            return await GetCart(product.UserId);
         }
 
-        public async Task RemoveProductFromCart(CartProductRemove product)
+        public async Task<List<CartProduct>> RemoveProductFromCart(CartProductRemove product)
         {
             await _metroRepository.RemoveProductFromCart(product);
+            return await GetCart(product.UserId);
+        }
+
+        public async Task<List<CartProduct>> GetCart(int userId)
+        {
+            var session = await _metroRepository.GetSessionAsync(userId);
+            return JsonSerializer.Deserialize<List<CartProduct>>(session.Products);
         }
     }
 }

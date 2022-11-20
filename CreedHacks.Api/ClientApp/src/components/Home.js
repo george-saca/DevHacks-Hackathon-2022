@@ -8,37 +8,29 @@ import Product from './Product';
 import { useAppContext } from '../contexts/AppContext';
 import { addToCart, removeFromCart } from '../helpers/httpCaller';
 
-export const Home = () => {
-  let { products } = useAppContext();
 
-  let [cartItems, setCartItems] = useState([]);
+export const Home = () => {
+  let { cartItems, products, setCartItems } = useAppContext();
+  // let [cartUserItems, setCartUserItems] = useState(cartItems);
+
   let [cartOpen, setCartOpen] = useState(false);
   const getTotalItems = (items) => Array.isArray(items) ?
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
 
+  // useEffect(() => {
+  //   setCartUserItems(cartItems)
+  //   }, [cartItems]);
 
   const handleAddToCart = async (clickedItem) => {
-    await addToCart({
+    addToCart({
       userId: 12345,
-      productId: clickedItem.id,
+      productId: clickedItem.id ?? clickedItem.productId,
       img: clickedItem.image,
       price: clickedItem.price,
       title: clickedItem.title,
       amount: 1
-    });
-
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
-
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
-
-      return [...prev, { ...clickedItem, amount: 1 }];
+    }).then((data)=>{
+      setCartItems(data);
     });
   };
 
