@@ -52,9 +52,7 @@ namespace CreedHacks.Api.Data
             _context?.SaveChanges();
         }
 
-        public async Task<CartSession> GetSessionAsync(int userId) =>
-            await _context?.Session?.Where(x => x.UserId == userId).FirstOrDefaultAsync();
-
+        public async Task<CartSession> GetSessionAsync(int userId) => await _context?.Session?.Where(x=>x.UserId ==userId).FirstOrDefaultAsync();
         public async Task<List<Product>> GetProductsAsync() => await _context?.Products.ToListAsync();
 
         public async Task AddToCart(CartItemDto cartItem)
