@@ -6,48 +6,43 @@ import { Wrapper, StyledButton } from "./Home.styles"
 import Cart from './Cart'
 import Product from './Product';
 import { useAppContext } from '../contexts/AppContext';
-import { addToCart } from '../helpers/httpCaller';
+import { addToCart, removeFromCart } from '../helpers/httpCaller';
 
 
 export const Home = () => {
   let { cartItems, products, setCartItems } = useAppContext();
-  let [cartUserItems, setCartUserItems] = useState(cartItems);
+  // let [cartUserItems, setCartUserItems] = useState(cartItems);
 
   let [cartOpen, setCartOpen] = useState(false);
   const getTotalItems = (items) => Array.isArray(items) ?
     items.reduce((acc, item) => acc + item.amount, 0) : 0;
-  
-  useEffect(() => {
-    setCartUserItems(cartItems)
-    }, [cartItems]);
+
+  // useEffect(() => {
+  //   setCartUserItems(cartItems)
+  //   }, [cartItems]);
 
   const handleAddToCart = async (clickedItem) => {
-    await addToCart({
-      id: clickedItem.id, 
-      img: clickedItem.image, 
-      price: clickedItem.price, 
+    addToCart({
+      userId: 12345,
+      productId: clickedItem.id ?? clickedItem.productId,
+      img: clickedItem.image,
+      price: clickedItem.price,
       title: clickedItem.title,
-      amount: 1});
-
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
-
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
-
-      return [...prev, { ...clickedItem, amount: 1 }];
+      amount: 1
+    }).then((data)=>{
+      setCartItems(data);
     });
   };
 
-  const handleRemoveFromCart = (id) => {
+  const handleRemoveFromCart = async (clickedItem) => {
+    await removeFromCart({
+      userId: 12345,
+      productId: clickedItem.id,
+      amount: 1
+    });
     setCartItems((prev) =>
       prev.reduce((acc, item) => {
-        if (item.id === id) {
+        if (item.id === clickedItem.id) {
           if (item.amount === 1) return acc;
           return [...acc, { ...item, amount: item.amount - 1 }];
         } else {
@@ -62,13 +57,13 @@ export const Home = () => {
       <h1>Products</h1>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
-          cartItems={cartUserItems}
+          cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartUserItems)} color="error">
+        <Badge badgeContent={getTotalItems(cartItems)} color="error">
           <AddShoppingCart />
         </Badge>
       </StyledButton>
