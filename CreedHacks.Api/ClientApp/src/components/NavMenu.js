@@ -27,7 +27,7 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/"><Logo><img alt="Metro logo" src='/metrologo.png'/></Logo></NavbarBrand>
+          <NavbarBrand tag={Link} to="/"><Logo><img alt="Metro logo" src='/metrologo.png'/></Logo> </NavbarBrand><span style={{fontSize:'20px', fontWeight:'bold', color:"#33435b"}}>ON & OFF SHOPPING</span>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
