@@ -14,6 +14,14 @@ namespace CreedHacks.Api.Controllers
         {
             _cartOperations = cartOperations;
         }
+        
+        [HttpGet]
+        [Route("{userId}")]
+        public async Task<ActionResult> GetCart(int userId)
+        {
+            var response = await _cartOperations.GetCart(userId);
+            return Ok(response);
+        }
 
         [HttpPost]
         public ActionResult AddToCart([FromBody] CartItemDto cartItemDto)

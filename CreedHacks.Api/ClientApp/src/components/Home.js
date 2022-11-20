@@ -8,6 +8,7 @@ import Product from './Product';
 import { useAppContext } from '../contexts/AppContext';
 import { addToCart } from '../helpers/httpCaller';
 
+
 export const Home = () => {
   let { products } = useAppContext();
 

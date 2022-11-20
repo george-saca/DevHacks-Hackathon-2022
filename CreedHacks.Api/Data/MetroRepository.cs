@@ -12,7 +12,7 @@ namespace CreedHacks.Api.Data
         public MetroRepository(ApplicationDbContext context)
         {
             _context = context;
-            var session = new CartSession()
+            var session1 = new CartSession()
             {
                 UserId = 12345,
                 Products = new List<CartProduct>()
@@ -20,9 +20,10 @@ namespace CreedHacks.Api.Data
                     new CartProduct()
                     {
                         ProductId = 1,
-                        Title = "Test",
+                        Title = "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
                         Description = "Test",
-                        Image = "img"
+                        Image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+                        Price = 109.95
                     }
                 }
             };
@@ -31,7 +32,23 @@ namespace CreedHacks.Api.Data
             var products = JsonSerializer.Deserialize<List<Product>>(productsJson);
 
             _context.Products.AddRange(products);
-            _context?.Session?.Add(session);
+            _context?.Session?.Add(session1);
+            
+            var session2 = new CartSession()
+            {
+                UserId = 678,
+                Products = new List<CartProduct>()
+                {
+                    new CartProduct()
+                    {
+                        ProductId = 2,
+                        Title = "Mens Casual Premium Slim Fit T-Shirts ",
+                        Description = "Test",
+                        Image = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
+                    }
+                }
+            };
+            _context?.Session?.Add(session2);
             _context?.SaveChanges();
         }
 

@@ -26,5 +26,11 @@ namespace CreedHacks.Api.Services
         {
             await _metroRepository.RemoveProductFromCart(product);
         }
+
+        public async Task<List<CartProduct>> GetCart(int userId)
+        {
+            var session = await _metroRepository.GetSessionAsync(userId);
+            return session.Products;
+        }
     }
 }

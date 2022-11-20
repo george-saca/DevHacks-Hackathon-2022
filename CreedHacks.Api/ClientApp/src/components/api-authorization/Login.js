@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Grid, TextField, Button } from '@material-ui/core'
+import { useAppContext } from '../../contexts/AppContext';
+
 export const Login = () => {
   
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const signInClick = () => 
-  {
-
+  {  
+    
   };
   const setPass = (pass) => 
   {
@@ -15,7 +17,7 @@ export const Login = () => {
 
   const setUser = (user) => 
   {
-
+    setUserName(user);
   };
 
   return (
