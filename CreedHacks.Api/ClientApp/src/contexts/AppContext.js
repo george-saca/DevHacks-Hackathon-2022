@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const AppContext = React.createContext();
 const AppContextProvider = ({ children }) => {
     const [products, setProducts] = useState([])
-    const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('userId')) || 12345);
+    const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('userId')) || 0);
     const [cartItems, setCartItems] = useState([]);
     let history = useNavigate();
     useEffect(() => {
@@ -17,15 +17,24 @@ const AppContextProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        async function fetchData() {
-            const resp = await getCart(userId);
-            setCartItems(resp);
+        if(userId == 0)
+            history("/authentication/login");
+        else
+        {
+            async function fetchData() {
+                const resp = await getCart(userId);
+                setCartItems(resp);
+            }
+            fetchData();
         }
-        fetchData();
-    }, [])
+       
+    }, [userId])
 
     useEffect(() => {
-        localStorage.setItem('userId', JSON.stringify(userId));
+        if(userId == 0)
+            history("/authentication/login");
+        else
+            localStorage.setItem('userId', JSON.stringify(userId));
     }, [userId])
 
 
